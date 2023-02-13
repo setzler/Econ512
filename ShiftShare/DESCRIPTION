@@ -1,0 +1,13 @@
+Package: ShiftShare
+Type: Package
+Title: Shift Share IV Research Designs
+Version: 0.1
+Author: Bradley Setzler
+Maintainer: Bradley Setzler <bradley.setzler@gmail.com>
+Description: Blank for now
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Depends: 
+    data.table
+RoxygenNote: 7.2.3
