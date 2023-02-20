@@ -57,3 +57,33 @@ shiftshare_environment = function(seed=1, II = 100, NN = 30,
 
 
 
+#' Demonstrate the over-rejection problem using our DGP.
+#' @param num_draws Number of random draws from DGP.
+#' @param regionshock_sd Std Dev of region shocks (set to zero to remove over-rejection problem).
+#' @export
+overrejection_check = function(num_draws = 20, regionshock_sd = 0.1){
+
+  pvalues = data.table()
+
+  for(draw in 1:num_draws){
+
+    simdata = shiftshare_environment(seed=draw, II = 100, NN = 30,
+                                     effect_of_interest = 0, weight_on_IV = 0.5,
+                                     eps_sd = 0.1, regionshock_sd = regionshock_sd)
+
+    IV = construct_shiftshare_IV(simdata$exposure_shares, simdata$industry_shocks)
+
+    thisdata = merge(simdata$outcomes_data, IV, by="location")
+
+    ivreg = feols(y_i ~ 1 | x_i ~ Z_i, data=thisdata)
+    thispval = as.data.table(summary(ivreg)$coeftable)[2,"Pr(>|t|)"]
+
+    pvalues = rbindlist(list(pvalues, data.table(seed=draw, pval=as.numeric(thispval))))
+
+  }
+
+  return(pvalues)
+
+}
+
+
