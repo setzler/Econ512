@@ -9,5 +9,6 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends: 
-    data.table
+    data.table,
+    fixest
 RoxygenNote: 7.2.3

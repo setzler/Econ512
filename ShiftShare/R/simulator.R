@@ -67,18 +67,24 @@ overrejection_check = function(num_draws = 20, regionshock_sd = 0.1){
 
   for(draw in 1:num_draws){
 
-    simdata = shiftshare_environment(seed=draw, II = 100, NN = 30,
+    simdata = shiftshare_environment(seed=draw, II = 750, NN = 290,
                                      effect_of_interest = 0, weight_on_IV = 0.5,
                                      eps_sd = 0.1, regionshock_sd = regionshock_sd)
 
+    # construct location-level IV, merge with outcomes, and execute location IV regression
     IV = construct_shiftshare_IV(simdata$exposure_shares, simdata$industry_shocks)
-
     thisdata = merge(simdata$outcomes_data, IV, by="location")
+    ivreg_location = feols(y_i ~ 1 | x_i ~ Z_i, data=thisdata)
+    pval_location = as.data.table(summary(ivreg_location)$coeftable)[2,"Pr(>|t|)"]
+    pval_location = as.numeric(pval_location)
 
-    ivreg = feols(y_i ~ 1 | x_i ~ Z_i, data=thisdata)
-    thispval = as.data.table(summary(ivreg)$coeftable)[2,"Pr(>|t|)"]
+    # use BHJ industry-level IV regression
+    ivreg_industry = BHJ_IV(simdata$outcomes_data, simdata$exposure_shares, simdata$industry_shocks)
+    pval_industry = as.data.table(summary(ivreg_industry)$coeftable)[2,"Pr(>|t|)"]
+    pval_industry = as.numeric(pval_industry)
 
-    pvalues = rbindlist(list(pvalues, data.table(seed=draw, pval=as.numeric(thispval))))
+    pvalues = rbindlist(list(pvalues,
+                             data.table(seed=draw, pval_location=pval_location, pval_industry=pval_industry)))
 
   }
 
