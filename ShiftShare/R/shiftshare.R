@@ -23,12 +23,13 @@ BHJ_IV = function(outcomes_data, exposure_shares, industry_shocks){
 
   BHJ_aggregates = outcomes_with_exposure[,list(
     ybar_industry_n = sum(y_i*exposure_share_in)/sum(exposure_share_in),
-    xbar_industry_n = sum(x_i*exposure_share_in)/sum(exposure_share_in)
+    xbar_industry_n = sum(x_i*exposure_share_in)/sum(exposure_share_in),
+    sbar_n = mean(exposure_share_in)
   ), industry]
 
   BHJ_aggregates = merge(BHJ_aggregates, industry_shocks, by="industry")
 
-  IVreg_BHJ = feols(ybar_industry_n ~ 1 | xbar_industry_n ~ industry_shock_n, data = BHJ_aggregates)
+  IVreg_BHJ = feols(ybar_industry_n ~ 1 | 0 | xbar_industry_n ~ industry_shock_n, data = BHJ_aggregates, weights = ~ sbar_n, vcov = "hc1")
 
   return(IVreg_BHJ)
 
