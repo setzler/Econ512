@@ -1,0 +1,75 @@
+{
+    "window.zoomLevel": 3,
+    "editor.inlineSuggest.enabled": true,
+    "workbench.colorTheme": "Default Dark+ Experimental",
+    "workbench.startupEditor": "none",
+    "editor.fontSize": 13,
+    "editor.renderWhitespace": "boundary",
+    "editor.wordWrap": "on",
+    "diffEditor.codeLens": true,
+    "editor.acceptSuggestionOnCommitCharacter": false,
+    "editor.acceptSuggestionOnEnter": "smart",
+    "editor.guides.bracketPairs": true,
+    "editor.autoClosingBrackets": "never",
+    "editor.autoClosingQuotes": "never",
+    "git.openRepositoryInParentFolders": "always",
+    "terminal.integrated.commandsToSkipShell": [
+        "language-julia.interrupt"
+    ],
+    "julia.symbolCacheDownload": true,
+    "julia.enableTelemetry": false,
+    "r.sessionWatcher": true,
+    "explorer.confirmDelete": false,
+    "git.enableSmartCommit": true,
+    "cSpell.maxDuplicateProblems": 1,
+    "cSpell.spellCheckOnlyWorkspaceFiles": true,
+    "cSpell.languageSettings": [
+        // This one works with Python
+        {
+            "languageId": "python",
+            "includeRegExpList": [
+                "/#.*/",
+               "/('''|\"\"\")[^\\1]+?\\1/g",
+                "strings"
+            ]
+        },
+        // This one works with R
+        {
+            "languageId": "r",
+            "includeRegExpList": [
+                "CStyleComment",
+                "strings",
+                "#.*$"
+            ]
+        },
+        // Use with cpp or c files
+        {
+            "languageId": "cpp,c",
+            // Turn off compound words, because it is only checking strings.
+            "allowCompoundWords": false,
+            // Only check comments and strings
+            "includeRegExpList": [
+                "CStyleComment",
+                "string"
+            ],
+            // Exclude includes, because they are also strings.
+            "ignoreRegExpList": [
+                "/#include.*/"
+            ]
+        }
+    ],
+    "workbench.colorCustomizations": {
+        "editor.background": "#000000",
+        "editor.foreground": "#FFFFFF",
+        "sideBar.background": "#000000"
+    },
+    "editor.tokenColorCustomizations": {
+        "comments": "#c24fc0",
+        "strings": "#0fd125",
+        "keywords": "#f58904",
+        "numbers": "#0fd125",
+        "types": "#FF0000",
+        "functions": "#f58904",
+        "variables": "#FFFFFF"
+    },
+}
