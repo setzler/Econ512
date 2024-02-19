@@ -12,4 +12,5 @@ Imports:
     data.table,
     fixest
 Suggests: 
-    ggplot2
+    ggplot2,
+    testthat
