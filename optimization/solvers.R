@@ -36,7 +36,7 @@ simulate_AR1 <- function(sample_size, time_periods, beta_effect, gamma_selection
 
 
 # try out the simulator
-set.seed(123)
-test_data = simulate_AR1(sample_size = 100, time_periods = 5, beta_effect = 1.0, gamma_selection = 0.0, rho_persistence = 0.5)
-lm( y_it ~ x_it, data = test_data)
+#set.seed(123)
+#test_data = simulate_AR1(sample_size = 100, time_periods = 5, beta_effect = 1.0, gamma_selection = 0.0, rho_persistence = 0.5)
+#lm( y_it ~ x_it, data = test_data)
 
