@@ -33,7 +33,13 @@ moment_solver <- function(paneldata) {
     }
 
 
-    return(quadratic_g( c(1.0, 0.5) ))
+    # estimate the parameters
+    start_params = c(3, 1)
+    res = optim(par = start_params, fn = quadratic_g, method = "BFGS")
+    #res = nloptr::newuoa(x0 = start_params, fn = quadratic_g)
+    #res = pso::psoptim(par = start_params, fn = quadratic_g, lower = c(-1, 0), upper = c(1, 1), control = list(maxit = 1000, trace = 1))
+    #res = nleqslv::nleqslv(start_params, evaluate_g, method = "Newton", global = "cline")
+    #res = DEoptim::DEoptim( fn = quadratic_g, lower = c(-5, -1), upper = c(5, 1))
 
 }
 
